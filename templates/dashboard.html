@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block title %}
+    {% if user.is_authenticated %}
+        Dashboard
+    {% else %}
+        Finance Tracker
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class = "container mx-auto p-6">
+    <div class = "text-center mb-8">
+        {% if user.is_authenticated %}
+            <h1 class = "text-3xl font-bold text-indigo-600">Welcome to your Finance Dashboard</h1>
+            <h1 class = "text-2xl font-bold my-2">{{request.user|capfirst}}</h1>
+        {% else %}
+            <h1 class = "text-3xl font-bold text-indigo-600">Welcome to your Finance Tracker</h1>
+        {% endif %}
+        <p class = "text-xl text-gray-700 mt-2">Track your income, expenses, and goals effectively.</p>
+    </div>
+    <div class = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        <div class = "bg-white p-6 rounded-lg shadow-md">
+            <h2 class = "text-xl font-semibold text-gray-800">Total Income</h2>
+            <p class = "text-3xl font-bold text-indigo-600">${{total_income|floatformat:2}}</p>
+        </div>
+        <div class = "bg-white p-6 rounded-lg shadow-md">
+            <h2 class = "text-xl font-semibold text-gray-800">Total Expenses</h2>
+            <p class = "text-3xl font-bold text-red-600">${{total_expense|floatformat:2}}</p>
+        </div>
+        <div class = "bg-white p-6 rounded-lg shadow-md">
+            <h2 class = "text-xl font-semibold text-gray-800">Net Savings</h2>
+            <p class = "text-3xl font-bold text-green-600">${{net_savings|floatformat:2}}</p>
+        </div>
+    </div>
+    <div class = "bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class = "text-2xl font-semibold text-gray-800 mb-4">Goal Status</h2>
+        <ul class = "space-y-4">
+            {% if goal_progress %}
+                {% for item in goal_progress %}
+                <li class = "flex justify-between items-center">
+                    <div class = "text-gray-800">
+                        <p class = "font-semibold">{{item.goal.name}}</p>
+                        <p class = "text-sm text-gray-600">Target: ${{item.goal.target_amount|floatformat:2}}</p>
+                        <p class = "text-sm text-gray-600">Deadline: {{item.goal.deadline}}</p>
+                    </div>
+                    <div class = "text-right">
+                        {% if item.progress == 100 %}
+                        <p class = "text-xl font-bold text-green-600">{{item.progress|floatformat:2}}%</p>
+
+                        {% elif item.progress >= 30 %}
+                        <p class = "text-xl font-bold text-purple-600">{{item.progress|floatformat:2}}%</p>
+
+                        {% else %}
+                        <p class = "text-xl font-bold text-red-600">{{item.progress|floatformat:2}}%</p>
+
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            {% elif not goal_progress and user.is_authenticated %}
+                <p class="text-gray-500 font-medium mt-4">You haven't set any goals yet. Start by creating one!</p>
+            {% else %}
+                 <p class="text-gray-500 font-medium mt-4">Please log in or create an account to track your goals!</p>
+            {% endif %}
+        </ul>
+    </div>
+    {% if user.is_authenticated %}
+        <div class = "text-center">
+        <a href = "{% url 'goal_add' %}" class = "w-max  justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">+ Create New Goal</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

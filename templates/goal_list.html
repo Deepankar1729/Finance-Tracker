@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %} My Goals{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mx-4 my-4">
+  <h1 class="text-2xl font-bold">Goals</h1>
+  {% if goals %}
+    <a href="{% url 'goal_add' %}" class = "w-max  justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">Add New Goal</a>
+  {% endif %}
+</div>
+
+<div class="container mx-auto px-4">
+  <!-- Goals list -->
+  {% if goals %}
+    <ul class="divide-y divide-gray-200">
+      {% for goal in goals %}
+        <li class="flex justify-between items-center px-3 py-4 hover:bg-gray-50 rounded-lg transition">
+          <div class="space-y-1">
+            <h3 class="text-lg font-semibold text-gray-800">{{goal.name}}</h3>
+            <p class="text-sm text-gray-600">
+              <span class="font-medium text-gray-700">Amount:</span> ${{goal.target_amount}}  
+              &nbsp;•&nbsp; 
+              <span class="font-medium text-gray-700">Deadline:</span> {{goal.deadline}}
+            </p>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <form action="{% url 'goal_delete' goal.id %}" method="post"
+                  onsubmit="return confirm('Are you sure you want to delete this goal?');">
+              {% csrf_token %}
+              <button type="submit"
+                      class = "w-max  justify-center py-2 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+                      title="Delete Goal">
+                Delete
+              </button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+      <div class="text-center text-gray-600 py-8 border border-gray-200 rounded-md bg-gray-50">
+          <p class="text-lg font-medium mb-4">You haven’t added any goals yet.</p>
+          <a href="{% url 'goal_add' %}" 
+             class="inline-flex items-center px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150 ease-in-out">
+             + Create New Goal
+         </a>
+      </div>
+  {% endif %}
+</div>
+{% endblock %}
