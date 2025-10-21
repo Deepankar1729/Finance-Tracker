@@ -22,6 +22,12 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
 
+def mess_for_forgotpass(request):
+    messages.info(request, "This feature isn't ready yet, but it's coming soon!")
+
+    return redirect('login')
+
+
 @never_cache
 def register(request):
     if request.user.is_authenticated:

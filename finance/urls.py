@@ -1,10 +1,11 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import  register, CustomLoginView, dashboard, transaction_form_view, transaction_list_view, goal_form_view, generate_report, goal_list_view, goal_delete, generate_bar_chart
+from .views import  register, CustomLoginView, dashboard, transaction_form_view, transaction_list_view, goal_form_view, generate_report, goal_list_view, goal_delete, generate_bar_chart, mess_for_forgotpass
 
 urlpatterns = [
     path('', dashboard, name = 'dashboard'),
     path('login/', CustomLoginView.as_view(), name = 'login'),
+    path('notice/', mess_for_forgotpass, name = 'forgot_password'),
     path('register/', register, name = 'register'),
     path('transaction/add/', transaction_form_view, name = 'transaction_add'),
     path('transactions/', transaction_list_view, name = 'transaction_list'),
