@@ -18,8 +18,8 @@ The main objective of this project is to **enhance financial awareness** by givi
 
 ## 🚀 **Live Demo**
 
-👉 **[View Live on Render](https://your-render-app-url.render.com)**  
-*(Replace this link with your actual Render deployment URL)*
+👉 **[View Live on Render](https://finance-tracker-gsuc.onrender.com/)**  
+
 
 ⚠️ **Note:** Since this project is hosted on Render's free tier, the first load may take some time to start. Please be patient while the app boots up.
 
@@ -72,4 +72,24 @@ The main objective of this project is to **enhance financial awareness** by givi
 | **Deployment** | Render |
 
 ---
+
+## ⚠️ Important Note
+
+The **Forgot Password** button is present on the Login form, but this feature is **not currently implemented**.  
+I chose **not to enable it for privacy reasons**, as activating it would require adding my email credentials (email address and password) in the Django `settings.py` file.  
+
+Enabling the Forgot Password functionality is straightforward and **can be done easily** once configured securely.
+
+---
+
+## 🌟 Future Improvements
+
+The Finance Tracker is functional but there are several areas for enhancement:
+
+- 📱 **Responsive Design:** Make the app fully responsive for mobile and tablet devices (currently not fully responsive).    
+- ✉️ **Email Notifications:** Notify users when they reach goal milestones or provide transaction summaries.  
+- 🌙 **Dark Mode:** Add a dark/light theme toggle for better accessibility and user preference.    
+- 🔒 **Enhanced Security:** Implement two-factor authentication (2FA) for improved account security.  
+- 📈 **Advanced Analytics:** Provide insights such as spending categories, top expenses, and saving suggestions.  
+- 🔑 **Forgot Password Feature:** Implement password reset functionality securely.  
 
